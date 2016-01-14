@@ -17,3 +17,4 @@ $ curl -X POST -H "Content-Type: application/json" -d @strokes.json http://local
 
 => {"scores":["二","匚","匸","工","冫","厂","汀","江","辶","冂"]}
 ```
+Or on http://localhost:9292
