@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script type="text/javascript" src="js/utils.js"></script>
+    <script type="text/javascript" src="js/api.js"></script>
+    <script type="text/javascript" src="js/results.js"></script>
+    <script type="text/javascript" src="js/canvas.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <style type="text/css">
+      canvas {
+        vertical-align: top;
+        border: 1px solid black;
+      }
+      #results {
+        margin-top: 10px;
+        height: 100px;
+      }
+      .result {
+        font-size: 400%;
+        font-weight: 600;
+        margin: 10px;
+      }
+      .buttons, .coordinates {
+        display: inline-block;
+        vertical-align: top;
+      }
+      .btn {
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="page-header">
+          <h1>
+            KvgCharacterRecognition Engine
+          </h1>
+          <p>
+            This is a test page for the KvgCharacterRecognition Engine, an online CJK-character recognizer using KanjiVG data as templates.
+          </p>
+          <p>
+          For more details please visit the <a href="https://github.com/thebluber/kvg_character_recognition">Github repository</a>
+          </p>
+      </div>
+      <div class="row">
+        <div id="results">
+        </div>
+      </div>
+      <div class="row">
+        <canvas id="pad" width="300" height="300">
+        </canvas>
+        <div class="buttons">
+          <button class="btn btn-primary" id="clean">Clear</button>
+          <br>
+          <button class="btn btn-primary" id="save">Save</button>
+          <br>
+          <button class="btn btn-primary" id="downsample">Downsample</button>
+          <br>
+          <button class="btn btn-primary" id="output">Output</button>
+          <br>
+          <button class="btn btn-primary" id="smooth">Smooth</button>
+          <br>
+          <button class="btn btn-primary" id="redraw">Redraw</button>
+          <br>
+          <button class="btn btn-primary" id="interpolate">Interpolate</button>
+        </div>
+        <div class="coordinates">
+          <textarea id="out" cols="50" rows="20">Push the output button to paste recorded coordinates into this textarea!
+          </textarea>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
