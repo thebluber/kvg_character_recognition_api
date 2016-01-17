@@ -32,11 +32,10 @@ GEM
     i18n (0.7.0)
     ice_nine (0.11.1)
     json (1.8.3)
-    kvg_character_recognition (0.1.0)
+    kvg_character_recognition (0.1.1)
       bundler (~> 1.10)
       nokogiri
-      sequel
-      sqlite3
+      parallel
     method_source (0.8.2)
     mini_portile2 (2.0.0)
     minitest (5.8.3)
@@ -44,6 +43,7 @@ GEM
     multi_xml (0.5.5)
     nokogiri (1.6.7.1)
       mini_portile2 (~> 2.0.0.rc2)
+    parallel (1.6.1)
     pry (0.10.3)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -54,9 +54,7 @@ GEM
     rack-cors (0.4.0)
     rack-mount (0.8.3)
       rack (>= 1.0.0)
-    sequel (4.30.0)
     slop (3.6.0)
-    sqlite3 (1.3.11)
     thread_safe (0.3.5)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
@@ -71,7 +69,7 @@ PLATFORMS
 
 DEPENDENCIES
   grape
-  kvg_character_recognition
+  kvg_character_recognition (~> 0.1.1)
   pry
   rack
   rack-cors

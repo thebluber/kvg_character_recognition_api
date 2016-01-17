@@ -10,8 +10,11 @@ module API
     end
     post 'scores' do
       strokes = JSON.parse(params[:strokes])
-      scores = KvgCharacterRecognition::Recognizer.scores(strokes).take params[:n_best]
-      { scores: scores.map(&:last) }
+
+      start = Time.now
+      scores = KvgCharacterRecognition::Recognizer.scores(strokes, DATASTORE).take params[:n_best]
+
+      { scores: scores.map{ |score| score.last[:value] }, time: Time.now - start }
     end
   end
 end
