@@ -33,6 +33,7 @@ function init() {
 
     function successCallback(results) {
       resultsUtils.render(results.scores);
+      resultsUtils.renderTimer(results.time);
     }
 
     function mouseleave() {

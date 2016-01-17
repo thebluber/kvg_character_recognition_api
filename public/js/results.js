@@ -9,5 +9,8 @@ var resultsUtils = {
     for(var i=0; i<results.length; i++) {
       $('<span class="result">' + results[i] + '</span>').appendTo('#results');
     }
+  },
+  renderTimer(time) {
+    $('#time').html('<p>Timer: ' + time + '</p>')
   }
 }
