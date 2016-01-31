@@ -12,11 +12,24 @@ function init() {
     var drawing = false;
     var points = [];
     var stroke = 0;
+    var sending = false;
+    
+    if( screen.width <= 480 ) {
+      window.addEventListener("resize", function(){ mobile.resizeCanvas(canvas) }, false);
+      window.addEventListener("orientationchange", function(){ mobile.resizeCanvas(canvas) }, false);
 
-    canvas.addEventListener("mousedown", startRecording, false);
-    canvas.addEventListener("mousemove", recording, false);
-    canvas.addEventListener("mouseup", stopRecording, false);
-    canvas.addEventListener("mouseleave", mouseleave, false);
+      canvas.addEventListener("touchstart", startRecording, false);
+      canvas.addEventListener("touchmove", recording, false);
+      canvas.addEventListener("touchend", stopRecording, false);
+      canvas.addEventListener("touchcancel", mouseleave, false);
+    } else {
+      canvas.width = 300;
+      canvas.height = 300;
+      canvas.addEventListener("mousedown", startRecording, false);
+      canvas.addEventListener("mousemove", recording, false);
+      canvas.addEventListener("mouseup", stopRecording, false);
+      canvas.addEventListener("mouseleave", mouseleave, false);
+    }
     if(canvas.getContext){
         var ctx = canvas.getContext("2d");
         ctx.strokeStyle = "#df4b26";
@@ -28,22 +41,27 @@ function init() {
     }
 
     function errorCallback(msg) {
+      sending = false;
       alert(msg);
     }
 
     function successCallback(results) {
+      sending = false;
       resultsUtils.render(results.scores);
       resultsUtils.renderTimer(results.time);
     }
 
     function mouseleave() {
-        drawing = false;
+      sending = false;
+      drawing = false;
     }
 
     function stopRecording(){
-        drawing = false;
+      drawing = false;
+      if(!sending) {
         var strokes = utils.convertPoints2Strokes(points);
         api.getScores(strokes, 10, successCallback, errorCallback);
+      }
     }
 
     function recording(event){
@@ -247,15 +265,17 @@ function init() {
     }
 
     function saveToFile(event){
-        //Generate a csv file for recorded points
-        var text = "";
-        for(var i = 0; i < points.length; i++){
-          text += points[i][0] + "," + points[i][1] + "," + points[i][2] + "\n";
+        var strokes = utils.convertPoints2Strokes(points);
+        var value = prompt("Value of the input: ", "蔵　京　機　画　物　壬　浜　大　豊　都")
+        if (value) {
+          var json = JSON.stringify({ value: value, strokes: strokes});
+          //Not possible to save files on client side using javascript due to security
+          //workaround is to create a Blob object
+          var textFileAsBlob = new Blob([json], {type:'text/csv;charset=utf-8'});
+          window.open(window.URL.createObjectURL(textFileAsBlob));
+        } else {
+          alert("Value is required for identifying input!");
         }
-        //Not possible to save files on client side using javascript due to security
-        //workaround is to create a Blob object
-        var textFileAsBlob = new Blob([text], {type:'text/csv;charset=utf-8'});
-        window.open(window.URL.createObjectURL(textFileAsBlob));
     }
 
     function output(event){

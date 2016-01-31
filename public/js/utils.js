@@ -5,23 +5,43 @@
  */
 
 var utils = {
+  draw(ctx, x, y, xPre, yPre){
+    ctx.beginPath();
+    ctx.moveTo(xPre, yPre);
+    ctx.lineTo(x, y);
+    //ctx.closePath();
+    ctx.stroke();
+    //ctx.fillRect(xPre,yPre,2,2);
+  },
+  renderResults(results) {
+    $('#results').html('');
+    for(var i=0; i<results.length; i++) {
+      $('<span class="result">' + results[i] + '</span>').appendTo('#results');
+    }
+  },
+  renderTimer(time) {
+    $('#time').html('<p>Timer: ' + time + '</p>')
+  },
+  redraw(ctx, strokes){
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
-  convertPoints2Strokes(points) {
-
-    var strokes = [];
-
-    for(var i=0; i<points.length; i++) {
-      var curr = points[i];
-      var stroke_i = curr[0] - 1;
-
-      if(strokes[stroke_i]) {
-        strokes[stroke_i].push([curr[1], curr[2]]);
-      } else {
-        strokes.push([[curr[1], curr[2]]]);
+    for(var i=0; i<strokes.length; i++){
+      for(var j=1; j<strokes[i].length; j++){
+        this.draw(ctx, strokes[i][j][0], strokes[i][j][1], strokes[i][j-1][0], strokes[i][j-1][1]);
       }
     }
-
-    return strokes;
+  },
+  save2File(strokes){
+    var value = prompt("Value of the input: ", "蔵　京　機　画　物　壬　浜　大　豊　都");
+    if (value) {
+      var json = JSON.stringify({ value: value, strokes: strokes});
+      api.saveSample(json);
+      //Not possible to save files on client side using javascript due to security
+      //workaround is to create a Blob object
+      //var textFileAsBlob = new Blob([json], {type:'text/csv;charset=utf-8'});
+      //window.open(window.URL.createObjectURL(textFileAsBlob));
+    } else {
+      alert("Value is required for identifying input!");
+    }
   }
-
 };

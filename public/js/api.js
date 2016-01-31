@@ -28,6 +28,24 @@ var api = {
       success: success,
       error: error
     })
+  },
+
+  saveSample(sample) {
+    var url = this.api_host + this.api_version + '/save';
+    $.ajax({
+      url: url,
+      type: 'POST',
+      dataType: 'json',
+      data: {
+        sample: sample
+      },
+      success: function(response) {
+        alert(response.notice);
+      },
+      error: function(response) {
+        alert(response.notice);
+      }
+    })
   }
 
 }
