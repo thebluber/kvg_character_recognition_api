@@ -12,17 +12,18 @@ var mobile = function(canvas, buttons) {
   function resizeCanvas(){
     canvas.width = window.innerWidth;
     canvas.height = window.innerWidth;
+    ctx = canvas.getContext("2d");
+    ctx.strokeStyle = "#df4b26";
+    //ctx.lineJoin = "round";
+    ctx.lineCap = "round";
+    ctx.lineWidth = 5;
+    utils.redraw(ctx, strokes);
   }
   window.addEventListener("resize", resizeCanvas, false);
   window.addEventListener("orientationchange", resizeCanvas, false);
 
   //setup canvas
   resizeCanvas();
-  ctx = canvas.getContext("2d");
-  ctx.strokeStyle = "#df4b26";
-  //ctx.lineJoin = "round";
-  ctx.lineCap = "round";
-  ctx.lineWidth = 5;
 
 
   //helper function
@@ -80,10 +81,12 @@ var mobile = function(canvas, buttons) {
 
   function stopRecording(){
     drawing = false;
-    if(!sending) {
-      //console.log(JSON.stringify(strokes));
-      api.getScores(strokes, 10, successCallback, errorCallback);
-    }
+    setTimeout(function(){
+      if(!sending) {
+        sending = true;
+        api.getScores(strokes, 10, successCallback, errorCallback);
+      }
+    }, 1000);
   }
 
   function cancelRecording(){

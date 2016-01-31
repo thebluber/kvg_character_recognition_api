@@ -67,9 +67,12 @@ var desktop = function(canvas, buttons) {
 
   function stopRecording(){
     drawing = false;
-    if(!sending) {
-      api.getScores(strokes, 10, successCallback, errorCallback);
-    }
+    setTimeout(function(){
+      if(!sending) {
+        sending = true;
+        api.getScores(strokes, 10, successCallback, errorCallback);
+      }
+    }, 1000);
   }
 
   function cancelRecording(){
