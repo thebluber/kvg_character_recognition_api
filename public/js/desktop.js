@@ -72,7 +72,7 @@ var desktop = function(canvas, buttons) {
         sending = true;
         api.getScores(strokes, 10, successCallback, errorCallback);
       }
-    }, 1000);
+    }, 500);
   }
 
   function cancelRecording(){
