@@ -5,6 +5,6 @@ gem 'rack-cors', require: 'rack/cors'
 
 gem 'grape'
 
-gem 'kvg_character_recognition', '~>0.1.2'
+gem 'kvg_character_recognition', '~>0.1.3'
 
 gem 'pry'
