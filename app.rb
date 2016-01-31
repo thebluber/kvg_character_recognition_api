@@ -9,6 +9,4 @@ API_DIR = File.expand_path('../app/api', __FILE__)
   require "#{API_DIR}/#{file}"
 end
 
-module API
-  DATASTORE = KvgCharacterRecognition::JSONDatastore.new('characters.json')
-end
+DATASTORE = KvgCharacterRecognition::JSONDatastore.new('joyo_kanji.json')
