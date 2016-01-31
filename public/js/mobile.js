@@ -21,6 +21,8 @@ var mobile = function(canvas, buttons) {
   }
   window.addEventListener("resize", resizeCanvas, false);
   window.addEventListener("orientationchange", resizeCanvas, false);
+  //for save
+  window.addEventListener("save", function(e){ utils.saveSample(e.detail, strokes); }, false);
 
   //setup canvas
   resizeCanvas();
@@ -39,7 +41,7 @@ var mobile = function(canvas, buttons) {
 
   function successCallback(results) {
     sending = false;
-    utils.renderResults(results.scores);
+    utils.renderResults(results.scores, strokes);
     utils.renderTimer(results.time);
   }
 
@@ -84,7 +86,7 @@ var mobile = function(canvas, buttons) {
     setTimeout(function(){
       if(!sending) {
         sending = true;
-        api.getScores(strokes, 10, successCallback, errorCallback);
+        api.getScores(strokes, 12, successCallback, errorCallback);
       }
     }, 500);
   }

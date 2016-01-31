@@ -27,12 +27,13 @@
         background-color: #eee;
       }
       .result {
-        font-size: 160%;
+        font-size: 260%;
         font-weight: 250;
-        margin: 3px;
+        margin: 8px;
       }
       .page-header {
         position: absolute;
+        top: 0px;
         left: 0px;
         right: 0px;
       }
@@ -46,15 +47,18 @@
         overflow:hidden;
         background-color:#fff;
       }
+      h4{
+        display: inline;
+      }
     </style>
   </head>
   <body>
     <div>
       <div class="page-header">
         <h4>KvgCharacterRecognition</h4>
+        <br/>
+        <span id="time"></span>
         <div id="results">
-        </div>
-        <div class="row" id="time">
         </div>
       </div>
       <canvas id="pad">

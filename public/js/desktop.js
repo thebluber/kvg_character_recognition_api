@@ -17,6 +17,7 @@ var desktop = function(canvas, buttons) {
   ctx.lineCap = "round";
   ctx.lineWidth = 3;
 
+  window.addEventListener("save", function(e){ utils.saveSample(e.detail, strokes); }, false);
 
   //helper function
   function addPoint2Stroke(x, y) {
@@ -70,7 +71,7 @@ var desktop = function(canvas, buttons) {
     setTimeout(function(){
       if(!sending) {
         sending = true;
-        api.getScores(strokes, 10, successCallback, errorCallback);
+        api.getScores(strokes, 20, successCallback, errorCallback);
       }
     }, 500);
   }

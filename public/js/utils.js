@@ -16,11 +16,11 @@ var utils = {
   renderResults(results) {
     $('#results').html('');
     for(var i=0; i<results.length; i++) {
-      $('<span class="result">' + results[i] + '</span>').appendTo('#results');
+      $('<a class="result" onclick="utils.dispatchSaveEvent(this.innerHTML)">' + results[i] + '</a>').appendTo('#results');
     }
   },
   renderTimer(time) {
-    $('#time').html('<p>Timer: ' + time + '</p>')
+    $('#time').html('Timer: ' + time)
   },
   redraw(ctx, strokes){
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
@@ -43,5 +43,16 @@ var utils = {
     } else {
       alert("Value is required for identifying input!");
     }
+  },
+  saveSample(value, strokes){
+    var confirmed = confirm("Save sample of " + value + "?");
+    if (confirmed){
+      var json = JSON.stringify({ value: value, strokes: strokes});
+      api.saveSample(json);
+    }
+  },
+  dispatchSaveEvent(value){
+    var evt = new CustomEvent('save', { 'detail': value });
+    window.dispatchEvent(evt);
   }
 };
