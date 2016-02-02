@@ -4,6 +4,7 @@
  * API server interactions
  */
 var api_host, api_version;
+api_host = 'http://192.168.2.101:9292';
 var api = {
   api_host: api_host || 'http://localhost:9292',
   api_version: api_version || '/api/v1',
@@ -40,7 +41,6 @@ var api = {
         sample: sample
       },
       success: function(response) {
-        alert(response.notice);
       },
       error: function(response) {
         alert(response.notice);

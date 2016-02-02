@@ -1,11 +1,10 @@
 'use strict';
 /*jslint browser: true*/
-/*global $, jQuery, alert, utils, api*/
+/*global $, jQuery, alert, utils, api, _*/
 
 var desktop = function(canvas, buttons) {
   var strokes = [];
   var drawing = false;
-  var sending = false;
   var ctx = canvas.getContext("2d");
 
   //setup canvas
@@ -26,15 +25,20 @@ var desktop = function(canvas, buttons) {
 
   //api callbacks
   function errorCallback(msg) {
-    sending = false;
     alert(msg);
   }
 
   function successCallback(results) {
-    sending = false;
     utils.renderResults(results.scores);
     utils.renderTimer(results.time);
   }
+
+  //debounce sending strokes
+  function sendStrokes() {
+    api.getScores(strokes, 12, successCallback, errorCallback);
+  }
+  var debounced = _.debounce(sendStrokes, 500, { 'leading': true, 'trailing': false });
+  window.addEventListener("send", debounced, false);
 
   //event handlers
   function startRecording(event) {
@@ -68,22 +72,16 @@ var desktop = function(canvas, buttons) {
 
   function stopRecording(){
     drawing = false;
-    setTimeout(function(){
-      if(!sending) {
-        sending = true;
-        api.getScores(strokes, 20, successCallback, errorCallback);
-      }
-    }, 500);
+    var evt = new Event('send');
+    window.dispatchEvent(evt);
   }
 
   function cancelRecording(){
     drawing = false;
-    sending = false;
   }
 
   //interactions
   function cleanAll(event){
-    drawing = false;
     strokes = [];
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
   }
