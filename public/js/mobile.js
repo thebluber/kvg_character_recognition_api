@@ -68,6 +68,7 @@ var mobile = function(canvas, buttons) {
 
       //Add start point of the stroke to the list
       strokes.push([[x,y]]);
+      debounced.cancel();
     }
   }
 
